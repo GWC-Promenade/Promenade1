@@ -1,4 +1,4 @@
-import React from 'react'
+import { Outlet, Navigate } from 'react-router-dom'
 
 /*
 - Wrap both SigninForm and SignupForm
@@ -8,8 +8,21 @@ import React from 'react'
     - Image gallery
 */
 const AuthLayout = () => {
+  const isAuthenticated = false;
+
   return (
-    <div>AuthLayout</div>
+    <>
+      {isAuthenticated ? (
+        <Navigate to="/"/> // if authenticated, navigate to home
+      ): (
+        // else, render wrapped components (SigninForm, SignupForm)
+        <>
+          <section> 
+            <Outlet /> 
+          </section>
+        </> 
+      )}
+    </>
   )
 }
 

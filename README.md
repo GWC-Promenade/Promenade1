@@ -5,3 +5,5 @@ Tools
 - TypeScript
 - Tailwind
 - Appwrite (backend service)
+- Vite (development)
+- shadcn (UI library)
