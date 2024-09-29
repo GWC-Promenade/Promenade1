@@ -7,3 +7,5 @@ Tools
 - Appwrite (backend service)
 - Vite (development)
 - shadcn (UI library)
+
+- FigJam (database schema diagram)

@@ -2,11 +2,11 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod" // shadcn form
 import { Link } from 'react-router-dom'
 
+import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,6 +23,7 @@ import { createUserAccount } from "@/lib/appwrite/api"
 
 
 const SignupForm = () => {
+  const { toast } = useToast()
   const isLoading = false;
 
   // <shadcn form>
@@ -47,9 +48,17 @@ const SignupForm = () => {
     // Input will be type-safe and validated.
 
     const newUser = await createUserAccount(values);
-    
-    
     console.log("new user created:", newUser);
+
+    if (!newUser) {
+      return toast({
+        variant: "destructive",
+        title: "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!",
+        description: "Sign up failed. Please try again.",
+      });
+    }
+
+    // const session = await signInAccount(); // TODO
   }
   // </shadcn form>
 
