@@ -98,3 +98,15 @@ export async function getCurrentUser() {
         console.log("error signing in: getting current user:", error);
     }
 }
+
+/*
+ * 
+ */
+export async function signOutAccount() {
+    try {
+        const session = await account.deleteSession("current");
+        return session;
+    } catch (error) {
+        console.log("error signing out:", error);
+    }
+}
