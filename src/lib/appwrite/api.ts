@@ -1,9 +1,9 @@
 /* 
 Functions we'll call to connect to Appwrite
 */
-import { ID, Query } from 'appwrite';
-import { INewUser } from "@/types";
-import { account, appwriteConfig, avatars, databases } from './config';
+import { ID, ImageGravity, Query } from 'appwrite';
+import { INewPost, INewUser } from "@/types";
+import { account, appwriteConfig, avatars, databases, storage } from './config';
 
 /*
 - Create a new account in Appwrite->Auth upon sign up
@@ -100,13 +100,103 @@ export async function getCurrentUser() {
 }
 
 /*
- * 
- */
+Delete user session
+*/
 export async function signOutAccount() {
     try {
         const session = await account.deleteSession("current");
         return session;
     } catch (error) {
         console.log("error signing out:", error);
+    }
+}
+
+/*
+Upload new post to storage, and add post to database
+*/
+export async function createPost(post: INewPost) {
+    try {
+        console.log("createPost called. post=", post);
+        // Upload image to Appwrite storage
+        const uploadedFile = await uploadFile(post.file[0]);
+        if (!uploadedFile) throw Error;
+
+        // Get file url
+        const fileUrl = getFilePreview(uploadedFile.$id);
+        console.log("fileUrl=", fileUrl);
+        if (!fileUrl) { // If something was corrupted, delete the uploaded file
+            await deleteFile(uploadedFile.$id);
+            throw Error;
+        }
+
+        // Convert tags to an array
+        const tags = post.tags?.replace(/ /g,'').split(',') || []; // replace all spaces with an empty string. Then split by commas
+
+        // Save new post to database
+        const newPost = await databases.createDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.postCollectionId,
+            ID.unique(),
+            {
+                creator: post.userId,
+                caption: post.caption,
+                imageUrl: fileUrl,
+                imageId: uploadedFile.$id,
+                location: post.location,
+                tags: tags
+            }
+        )
+        if (!newPost) {
+            await deleteFile(uploadedFile.$id);
+            throw new Error;
+        }
+
+        return newPost;
+
+    } catch (error) {
+        console.log("error creating post:", error)
+    }
+}
+
+/*
+Upload image to Appwrite storage bucket
+*/
+export async function uploadFile(file: File) {
+    try {
+        const uploadedFile = await storage.createFile(
+            appwriteConfig.storageId,
+            ID.unique(),
+            file
+        );
+        return uploadedFile;
+    } catch (error) {
+        console.log("error uploading file:", error)
+    }
+}
+
+export function getFilePreview(fileId: string) {
+    try {
+        const fileUrl = storage.getFilePreview(
+            appwriteConfig.storageId,
+            fileId,
+            2000, 
+            2000, // width and height
+            ImageGravity.Top, // where it's gonna show
+            100 // quality
+        );
+        if (!fileUrl) throw Error
+        
+        return fileUrl;
+    } catch (error) {
+        console.log("error getting file preview:", error)
+    }
+}
+
+export async function deleteFile(fileId: string) {
+    try {
+        await storage.deleteFile(appwriteConfig.storageId, fileId);
+        return { status: 'ok' }
+    } catch (error) {
+        console.log("error deleting file:", error)
     }
 }
