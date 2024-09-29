@@ -2,6 +2,14 @@
 source: https://github.com/adrianhajdin/social_media_app/tree/main
 I stands for interface
 */
+export type IContextType = {
+  user: IUser;
+  isLoading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<IUser>>;
+  isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  checkAuthUser: () => Promise<boolean>;
+}
 
 export type INavLink = {
     imgURL: string;

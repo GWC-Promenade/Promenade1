@@ -3,9 +3,13 @@ A first attempt at the tutorial here: https://www.youtube.com/watch?v=_W3R2VwRyF
 Tools
 - React
 - TypeScript
-- Tailwind
+
 - Appwrite (backend service)
 - Vite (development)
-- shadcn (UI library)
+
+- Libraries
+    - Tailwind
+    - shadcn (UI library)
+    - TanStack Query (formerly known as React Query)
 
 - FigJam (database schema diagram)

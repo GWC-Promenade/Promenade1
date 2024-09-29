@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod" // shadcn form
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
@@ -16,7 +16,8 @@ import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { SignupValidation } from "@/lib/validation"
 import Loader from "@/components/shared/Loader"
-import { createUserAccount } from "@/lib/appwrite/api"
+import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations"
+import { useUserContext } from "@/context/AuthContext"
 
 
  
@@ -24,7 +25,18 @@ import { createUserAccount } from "@/lib/appwrite/api"
 
 const SignupForm = () => {
   const { toast } = useToast()
-  const isLoading = false;
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount(); 
+  /* ^
+  - This sets up a hook to use with React Query for adding a new account to our auths and our database
+  - React Query is an extra layer between our Appwrite API and our front end, in order to have smooth extra features like caching
+  - mutateAsync is the mutationFn function in the return of useCreateUserAccountMutation(), namely createUserAccount() 
+  - "mutateAsync: createUserAccount" syntax renames the function "mutateAsync" to "createUserAccount"
+  - isLoading is a bool denoting whether the action of mutation is currently loading. We can use it to render a loading animation
+  */
+
+  const { mutateAsync: signInAccount, isPending: isSigningIn } = useSignInAccount();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const navigate = useNavigate();
 
   // <shadcn form>
   // 1. Define your form.
@@ -40,8 +52,9 @@ const SignupForm = () => {
  
   // 2. Define a submit handler.
   /* 
-  why await and async?
-    creating a newUser is an action in the database that may take some time
+  - create a new user account and add it to the database
+  - sign into the account and navigate to home
+  - why await and async? creating a newUser is an action in the database that may take some time
   */
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
     // Create the user
@@ -58,7 +71,31 @@ const SignupForm = () => {
       });
     }
 
-    // const session = await signInAccount(); // TODO
+    const session = await signInAccount({
+      email: values.email,
+      password: values.password
+    }); 
+
+    if (!session) {
+      return toast({
+        variant: "destructive",
+        title: "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!",
+        description: "Sign up failed. Please try again.",
+      });
+    }
+
+    const isLoggedIn = await checkAuthUser();
+
+    if (isLoggedIn) {
+      form.reset();
+      navigate('/');
+    } else {
+      return toast({
+        variant: "destructive",
+        title: "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!",
+        description: "Sign up failed. Please try again.",
+      });
+    }
   }
   // </shadcn form>
 
@@ -126,7 +163,7 @@ const SignupForm = () => {
             )}
           />
           <Button type="submit" className="shad-button_primary">
-            {isLoading ? (
+            {isCreatingAccount ? (
               <div className="flex-center gap-2">
                 <Loader/> 
                 Loading...
