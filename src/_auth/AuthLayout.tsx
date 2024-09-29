@@ -17,8 +17,15 @@ const AuthLayout = () => {
       ): (
         // else, render wrapped components (SigninForm, SignupForm)
         <>
-          <section> 
+          <section className="flex flex-1 justify-center items-center flex-col py-10"> 
             <Outlet /> 
+          </section>
+          <section>
+            <img 
+              src="/assets/images/side-img.svg"
+              alt="logo"
+              className="hidden xl:block h-screen object-cover bg-no-repeat"
+            />
           </section>
         </> 
       )}
