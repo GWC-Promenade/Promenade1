@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { SignupValidation } from "@/lib/validation"
 import Loader from "@/components/shared/Loader"
+import { createUserAccount } from "@/lib/appwrite/api"
 
 
  
@@ -47,7 +48,8 @@ const SignupForm = () => {
 
     const newUser = await createUserAccount(values);
     
-    console.log(values)
+    
+    console.log("new user created:", newUser);
   }
   // </shadcn form>
 
