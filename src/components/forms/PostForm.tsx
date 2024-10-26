@@ -58,7 +58,7 @@ const PostForm = ( {post}: PostFormProps ) => {
       })
     }
 
-    navigate('/');
+    navigate('/'); // upon successful post, navigate back to homepage
 
   }
 
