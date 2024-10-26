@@ -39,6 +39,7 @@ const PostCard = ( {post}: PostCardProps ) => {
               </p>
             </div>
           </div>
+        </div>
 
           <Link to={`/update-post/${post.$id}`}
             className={`${user.id !== post.creator.$id && "hidden"}`}
@@ -50,7 +51,7 @@ const PostCard = ( {post}: PostCardProps ) => {
               height={20}
             />
           </Link>
-        </div>
+      </div>
 
         <Link to={`/posts/${post.$id}`}>
           <div className="small-medium lg:base-medium py-5">
@@ -71,8 +72,6 @@ const PostCard = ( {post}: PostCardProps ) => {
             alt="post image"
           />
         </Link>
-      </div>
-      
     </div>
   )
 }
