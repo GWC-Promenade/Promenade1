@@ -45,8 +45,8 @@ const PostForm = ( {post, action}: PostFormProps ) => {
       file: [],
       location: post ? post?.location : "",
       tags: post ? post.tags.join(',') : '',
-      latitude: post ? post?.latitude : 0,
-      longitude: post ? post?.longitude : 0,
+      // latitude: post ? post?.latitude : 0,
+      // longitude: post ? post?.longitude : 0,
     },
   })
  
@@ -151,7 +151,7 @@ const PostForm = ( {post, action}: PostFormProps ) => {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="latitude"
           render={({ field }) => (
@@ -168,9 +168,9 @@ const PostForm = ( {post, action}: PostFormProps ) => {
               <FormMessage className="shad-form_message" />
             </FormItem>
           )}
-        />
+        /> */}
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="longitude"
           render={({ field }) => (
@@ -187,7 +187,7 @@ const PostForm = ( {post, action}: PostFormProps ) => {
               <FormMessage className="shad-form_message" />
             </FormItem>
           )}
-        />
+        /> */}
 
         <div className="flex gap-4 items-center justify-end">
           <Button 
