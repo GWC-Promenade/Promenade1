@@ -347,3 +347,7 @@ export async function deletePost(postId: string, imageId: string) {
         console.log(error)
     }
 }
+
+export async function temp() {
+    
+}
