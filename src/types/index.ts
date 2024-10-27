@@ -32,9 +32,9 @@ export type INavLink = {
     file: File[];
     location?: string;
     tags?: string;
-    // latitude?: number;
-    // longitude?: number;
-  };
+    latitude?: number; // heidi's changes
+    longitude?: number;
+  }; 
   
   export type IUpdatePost = {
     postId: string;
