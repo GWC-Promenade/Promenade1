@@ -8,7 +8,7 @@ type FileUploaderProps = {
 }
 
 const FileUploader = ( {fieldChange, mediaUrl}: FileUploaderProps ) => {
-  const [fileUrl, setFileUrl] = useState('')
+  const [fileUrl, setFileUrl] = useState(mediaUrl)
   const [file, setFile] = useState<File[]>([]) // file is an array of files, since we can upload multiple
 
   // what to do upon file upload

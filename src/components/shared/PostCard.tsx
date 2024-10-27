@@ -1,16 +1,15 @@
 import { useUserContext } from '@/context/AuthContext';
-import { formatDate } from '@/lib/utils';
+import { formatDateString } from '@/lib/utils';
 import { Models } from 'appwrite';
 import React from 'react'
 import { Link } from 'react-router-dom';
+import PostStats from './PostStats';
 
 type PostCardProps = {
   post: Models.Document;
 }
 const PostCard = ( {post}: PostCardProps ) => {
   const { user } = useUserContext();
-
-  console.log(post);
 
   if (!post.creator) return; // something wrong
 
@@ -32,7 +31,7 @@ const PostCard = ( {post}: PostCardProps ) => {
             </p>
             <div className="flex-center gap-2 text-light-3">
               <p className="subtle-semibold lg:small-regular">
-                {formatDate(post.$createdAt)}
+                {formatDateString(post.$createdAt)}
               </p>
               <p className="subtle-semibold lg:small-regular">
                 {post.location}
@@ -42,10 +41,9 @@ const PostCard = ( {post}: PostCardProps ) => {
         </div>
 
           <Link to={`/update-post/${post.$id}`}
-            className={`${user.id !== post.creator.$id && "hidden"}`}
-          >
+            className={`${user.id !== post.creator.$id && "hidden"}`}>
             <img 
-              src="/assets/icons/edit.svg"
+              src={"/assets/icons/edit.svg"}
               alt="edit post"
               width={20}
               height={20}
@@ -72,6 +70,7 @@ const PostCard = ( {post}: PostCardProps ) => {
             alt="post image"
           />
         </Link>
+        <PostStats post={post} userId={user.Id} /> 
     </div>
   )
 }

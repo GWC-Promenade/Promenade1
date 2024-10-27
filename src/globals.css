@@ -280,3 +280,10 @@
     @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
   }
 }
+
+.map-container {
+  height: 500 px;
+  width: 50%;
+  border: 2px solid black;
+  border-radius: 20px;
+}

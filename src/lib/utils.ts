@@ -1,30 +1,58 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
-export function formatDate(dateString: string): string {
+export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
+
+export function formatDateString(dateString: string) {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+
   const date = new Date(dateString);
-  const now = new Date();
-  const secondsAgo = Math.floor((now.getTime() - date.getTime()) / 1000);
+  const formattedDate = date.toLocaleDateString("en-US", options);
 
-  const units: { name: string; seconds: number }[] = [
-      { name: "year", seconds: 31536000 },
-      { name: "month", seconds: 2592000 },
-      { name: "week", seconds: 604800 },
-      { name: "day", seconds: 86400 },
-      { name: "hour", seconds: 3600 },
-      { name: "minute", seconds: 60 },
-      { name: "second", seconds: 1 }
-  ];
+  const time = date.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
 
-  for (const unit of units) {
-      const interval = Math.floor(secondsAgo / unit.seconds);
-      if (interval >= 1) {
-          return `${interval} ${unit.name}${interval > 1 ? 's' : ''} ago`;
-      }
-  }
-  return "just now";
+  return `${formattedDate} at ${time}`;
 }
+
+// 
+export const multiFormatDateString = (timestamp: string = ""): string => {
+  const timestampNum = Math.round(new Date(timestamp).getTime() / 1000);
+  const date: Date = new Date(timestampNum * 1000);
+  const now: Date = new Date();
+
+  const diff: number = now.getTime() - date.getTime();
+  const diffInSeconds: number = diff / 1000;
+  const diffInMinutes: number = diffInSeconds / 60;
+  const diffInHours: number = diffInMinutes / 60;
+  const diffInDays: number = diffInHours / 24;
+
+  switch (true) {
+    case Math.floor(diffInDays) >= 30:
+      return formatDateString(timestamp);
+    case Math.floor(diffInDays) === 1:
+      return `${Math.floor(diffInDays)} day ago`;
+    case Math.floor(diffInDays) > 1 && diffInDays < 30:
+      return `${Math.floor(diffInDays)} days ago`;
+    case Math.floor(diffInHours) >= 1:
+      return `${Math.floor(diffInHours)} hours ago`;
+    case Math.floor(diffInMinutes) >= 1:
+      return `${Math.floor(diffInMinutes)} minutes ago`;
+    default:
+      return "Just now";
+  }
+};
+
+export const checkIsLiked = (likeList: string[], userId: string) => {
+  return likeList.includes(userId);
+};

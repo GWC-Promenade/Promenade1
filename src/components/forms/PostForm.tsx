@@ -18,17 +18,21 @@ import { Models } from "appwrite"
 import { useUserContext } from "@/context/AuthContext"
 import { useToast } from "@/hooks/use-toast"
 import { useNavigate } from "react-router-dom"
-import { useCreatePost } from "@/lib/react-query/queriesAndMutations"
+import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations"
 
 type PostFormProps = {
   post?: Models.Document;
+  action : 'Create' | 'Update';
 }
 
 /* 
 PostForm takes a post object as a prop in the case that the user is editing a post
 */
-const PostForm = ( {post}: PostFormProps ) => {
+const PostForm = ( {post, action}: PostFormProps ) => {
   const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost();
+  const { mutateAsync: updatePost, isPending: isLoadingUpdate } = useUpdatePost();
+
+
   const { user } = useUserContext();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -40,13 +44,29 @@ const PostForm = ( {post}: PostFormProps ) => {
       caption: post ? post?.caption : "",
       file: [],
       location: post ? post?.location : "",
-      tags: post ? post.tags.join(',') : ''
+      tags: post ? post.tags.join(',') : '',
+      // latitude: post ? post?.latitude : 0,
+      // longitude: post ? post?.longitude : 0,
     },
   })
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
-    console.log(values)
+    if(post && action === 'Update') {
+      const updatedPost = await updatePost({
+        ...values, 
+        postId: post.$id,
+        imageId: post?.imageId,
+        imageUrl: post?.imageUrl
+      })
+
+      if(!updatedPost) {
+        toast({ title: 'Please try again'})
+      }
+
+      return navigate(`/posts/${post.$id}`)
+    }
+
     const newPost = await createPost({
       ...values, 
       userId: user.id
@@ -61,6 +81,8 @@ const PostForm = ( {post}: PostFormProps ) => {
     navigate('/'); // upon successful post, navigate back to homepage
 
   }
+
+  console.log(post?.imageUrl)
 
   return (
     <Form {...form}>
@@ -128,6 +150,45 @@ const PostForm = ( {post}: PostFormProps ) => {
             </FormItem>
           )}
         />
+
+        {/* <FormField
+          control={form.control}
+          name="latitude"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Latitude</FormLabel>
+              <FormControl>
+                <Input 
+                  type="text"
+                  className="shad-input"
+                  placeholder="30.29125"
+                  // {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        /> */}
+
+        {/* <FormField
+          control={form.control}
+          name="longitude"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Longitude</FormLabel>
+              <FormControl>
+                <Input 
+                  type="text"
+                  className="shad-input"
+                  placeholder="97.742111"
+                  // {...field}
+                />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        /> */}
+
         <div className="flex gap-4 items-center justify-end">
           <Button 
             type="button" 
@@ -138,8 +199,10 @@ const PostForm = ( {post}: PostFormProps ) => {
           <Button 
             type="submit"
             className="shad-button_primary whitespace-nowrap"
+            disabled={isLoadingCreate || isLoadingUpdate}
           >
-            Submit
+            {isLoadingCreate || isLoadingUpdate && 'Loading...'}
+            {action} Post
           </Button>
         </div>
         
