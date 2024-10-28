@@ -282,8 +282,7 @@
 }
 
 .map-container {
-  height: 500 px;
-  width: 50%;
-  border: 2px solid black;
+  height: 500px;
+  width: 500px;
   border-radius: 20px;
 }

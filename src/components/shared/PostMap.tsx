@@ -1,42 +1,41 @@
 import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps';
 import React, { useState } from 'react'
 
-// const CustomMap = () => {
-  
-// }
+interface PostMapProps {
+  location: google.maps.LatLngLiteral;
+}
 
 // const API_KEY = globalThis.GOOGLE_MAPS_API_KEY ?? (process.env.GOOGLE_MAPS_API_KEY as string);
-const PostMap = () => {
+const PostMap: React.FC<PostMapProps> = ({location}) => {
   const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   console.log(API_KEY)
 
-  // shows marker on London by default
-  const [markerLocation, setMarkerLocation] = useState({
-    lat: 51.509865,
-    lng: -0.118092,
-  });
+  const defaultLocation: google.maps.LatLngLiteral = {
+    lat: 30.29125,
+    lng: 97.74211,
+  }
 
-  console.log("custom map");
+  const shownLocation = location.lat && location.lng ? location : defaultLocation;
+  const [markerLocation, setMarkerLocation] = useState(shownLocation);
+
+  console.log("in PostMap: markerLocation=", markerLocation)
 
   return (
-    // <div className="map-container">
+    <>
       <APIProvider apiKey={API_KEY}>
-        <Map
-          // style={{ borderRadius: "20px" }}
-          // defaultZoom={13}
-          // defaultCenter={markerLocation}
-          // gestureHandling={"greedy"}
-          // disableDefaultUI
-          mapId={'a45f50503e0bd946'}
-          defaultZoom={3}
+        <Map className="map-container"
+          // mapId={'a45f50503e0bd946'}
+          defaultZoom={18}
           defaultCenter={markerLocation}
           gestureHandling={'greedy'}
+          mapTypeId={'satellite'}
           disableDefaultUI
         >
-          <AdvancedMarker position={markerLocation} />
+          {/* <AdvancedMarker position={markerLocation} /> */}
         </Map>
       </APIProvider>
-    // </div>
+    </>
+      
   )
 }
 

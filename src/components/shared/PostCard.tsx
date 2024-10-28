@@ -4,6 +4,7 @@ import { Models } from 'appwrite';
 import React from 'react'
 import { Link } from 'react-router-dom';
 import PostStats from './PostStats';
+import PostMap from './PostMap';
 
 type PostCardProps = {
   post: Models.Document;
@@ -13,7 +14,17 @@ const PostCard = ( {post}: PostCardProps ) => {
 
   if (!post.creator) return; // something wrong
 
+  const location: google.maps.LatLngLiteral = {
+    lat: post.latitude,
+    lng: post.longitude,
+  }
+
+  console.log("in PostCard: from post: caption=", post.caption);
+  console.log("in PostCard: from post: latitude=", post.latitude, "longitude=", post.longitude);
+  console.log("in PostCard: from post: tags=", post.tags);
+
   return (
+    <>
     <div className="post-card">
       <div className="flex-between">
         <div className="flex items-center gap-3">
@@ -54,14 +65,16 @@ const PostCard = ( {post}: PostCardProps ) => {
         <Link to={`/posts/${post.$id}`}>
           <div className="small-medium lg:base-medium py-5">
             <p>{post.caption}</p>
-            <ul className="flex gap-1 mt-2">
+            {post.tags[0] != '' && (
+              <ul className="flex gap-1 mt-2">
               {post.tags.map((tag: string) => (
                 <li key={tag} className="text-light-3">
                   #{tag}
                 </li>
-                
               ))}
             </ul>
+            )}
+            
           </div>
 
           <img 
@@ -69,10 +82,14 @@ const PostCard = ( {post}: PostCardProps ) => {
             className="post-card_img"
             alt="post image"
           />
-    
+
+        <PostMap location={location}/>
+          
         </Link>
         <PostStats post={post} userId={user.id} /> 
     </div>
+    
+    </>
   )
 }
 
