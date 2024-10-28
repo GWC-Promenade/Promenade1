@@ -82,10 +82,16 @@ const PostCard = ( {post}: PostCardProps ) => {
             className="post-card_img"
             alt="post image"
           />
-
-        <PostMap location={location}/>
-          
         </Link>
+        <PostMap location={location}/>
+
+        <div>
+          {post.transportation.map((transport: string) => (
+            <p key={transport} className="text-light-3">{transport}</p>
+          ))}
+        </div>
+          
+        
         <PostStats post={post} userId={user.id} /> 
     </div>
     
