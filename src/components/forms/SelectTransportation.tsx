@@ -1,6 +1,7 @@
 import { Transportation } from '@/types';
 import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
 import React from 'react'
+import TransportationIcon from '../shared/TransportationIcon';
 
 interface SelectTransportationProps {
   transportation: Transportation[];
@@ -28,17 +29,17 @@ const SelectTransportation: React.FC<SelectTransportationProps> = ({transportati
       <ToggleGroupItem value={Transportation.Bike}
       className={`option-hover ${transportation.includes(Transportation.Bike) && "option-select"}`}
       >
-        Bike
+        <TransportationIcon transportation={Transportation.Bike as string} />
       </ToggleGroupItem>
 
       <ToggleGroupItem value={Transportation.Walk}
       className={`option-hover ${transportation.includes(Transportation.Walk) && "option-select"}`}>
-        Walk
+        <TransportationIcon transportation={Transportation.Walk as string} />
       </ToggleGroupItem>
 
       <ToggleGroupItem value={Transportation.Bus}
       className={`option-hover ${transportation.includes(Transportation.Bus) && "option-select"}`}>
-        Bus
+        <TransportationIcon transportation={Transportation.Bus as string} />
       </ToggleGroupItem>
 
     </ToggleGroup>
