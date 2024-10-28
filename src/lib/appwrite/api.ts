@@ -4,6 +4,7 @@ Functions we'll call to connect to Appwrite
 import { ID, ImageGravity, Query } from 'appwrite';
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { account, appwriteConfig, avatars, databases, storage } from './config';
+import { LogIn } from 'lucide-react';
 
 /*
 - Create a new account in Appwrite->Auth upon sign up
@@ -143,7 +144,9 @@ export async function createPost(post: INewPost) {
                 imageUrl: fileUrl,
                 imageId: uploadedFile.$id,
                 location: post.location,
-                tags: tags
+                tags: tags,
+                latitude: post.latitude,
+                longitude: post.longitude,
             }
         );
 
