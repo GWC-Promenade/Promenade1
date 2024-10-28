@@ -21,6 +21,7 @@ const PostCard = ( {post}: PostCardProps ) => {
 
   console.log("in PostCard: from post: caption=", post.caption);
   console.log("in PostCard: from post: latitude=", post.latitude, "longitude=", post.longitude);
+  console.log("in PostCard: from post: tags=", post.tags);
 
   return (
     <>
@@ -64,14 +65,16 @@ const PostCard = ( {post}: PostCardProps ) => {
         <Link to={`/posts/${post.$id}`}>
           <div className="small-medium lg:base-medium py-5">
             <p>{post.caption}</p>
-            <ul className="flex gap-1 mt-2">
+            {post.tags[0] != '' && (
+              <ul className="flex gap-1 mt-2">
               {post.tags.map((tag: string) => (
                 <li key={tag} className="text-light-3">
                   #{tag}
                 </li>
-                
               ))}
             </ul>
+            )}
+            
           </div>
 
           <img 
