@@ -19,6 +19,8 @@ const PostCard = ( {post}: PostCardProps ) => {
     lng: post.longitude,
   }
 
+  console.log("in PostCard: from post: caption=", post.caption);
+  console.log("in PostCard: from post: latitude=", post.latitude, "longitude=", post.longitude);
 
   return (
     <>

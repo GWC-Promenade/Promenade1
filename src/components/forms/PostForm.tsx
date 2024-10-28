@@ -52,12 +52,15 @@ const PostForm = ( {post, action}: PostFormProps ) => {
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
+
     if(post && action === 'Update') {
       const updatedPost = await updatePost({
         ...values, 
         postId: post.$id,
         imageId: post?.imageId,
-        imageUrl: post?.imageUrl
+        imageUrl: post?.imageUrl,
+        // latitude: post?.latitude,
+        // longitude: post?.longitude,
       })
 
       if(!updatedPost) {
@@ -69,7 +72,9 @@ const PostForm = ( {post, action}: PostFormProps ) => {
 
     const newPost = await createPost({
       ...values, 
-      userId: user.id
+      userId: user.id,
+      // latitude: post?.latitude,
+      // longitude: post?.longitude,
     })
 
     if (!newPost) {
@@ -143,7 +148,7 @@ const PostForm = ( {post, action}: PostFormProps ) => {
                   type="text"
                   className="shad-input"
                   placeholder="Art, Expression, Learn"
-                  // {...field}
+                  {...field}
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />
@@ -159,10 +164,11 @@ const PostForm = ( {post, action}: PostFormProps ) => {
               <FormLabel className="shad-form_label">Latitude</FormLabel>
               <FormControl>
                 <Input 
-                  type="text"
+                  type="number"
+                  step="any"
                   className="shad-input"
                   placeholder="30.29125"
-                  // {...field}
+                  {...field}
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />
@@ -178,10 +184,11 @@ const PostForm = ( {post, action}: PostFormProps ) => {
               <FormLabel className="shad-form_label">Longitude</FormLabel>
               <FormControl>
                 <Input 
-                  type="text"
+                  type="number"
+                  step="any"
                   className="shad-input"
                   placeholder="97.742111"
-                  // {...field}
+                  {...field}
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />

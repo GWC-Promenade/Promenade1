@@ -18,17 +18,17 @@ const PostMap: React.FC<PostMapProps> = ({location}) => {
   const shownLocation = location.lat && location.lng ? location : defaultLocation;
   const [markerLocation, setMarkerLocation] = useState(shownLocation);
 
-  console.log("custom map");
-  console.log("location:", markerLocation)
+  console.log("in PostMap: markerLocation=", markerLocation)
 
   return (
     <>
       <APIProvider apiKey={API_KEY}>
         <Map className="map-container"
           // mapId={'a45f50503e0bd946'}
-          defaultZoom={3}
+          defaultZoom={18}
           defaultCenter={markerLocation}
           gestureHandling={'greedy'}
+          mapTypeId={'satellite'}
           disableDefaultUI
         >
           {/* <AdvancedMarker position={markerLocation} /> */}

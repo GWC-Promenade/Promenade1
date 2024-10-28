@@ -23,6 +23,6 @@ export const PostValidation = z.object({
     file: z.custom<File[]>(),
     location: z.string().min(1).max(100),
     tags: z.string(),
-    latitude: z.number(),
-    longitude: z.number()
+    latitude: z.string().transform((v) => Number(v) || 0),
+    longitude: z.string().transform((v) => Number(v) || 0),
 })
