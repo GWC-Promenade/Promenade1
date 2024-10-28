@@ -18,7 +18,7 @@ const App = () => {
               <Route path="/sign-in" element={<SigninForm/>}/>
               <Route path="/sign-up" element={<SignupForm/>}/>
 
-              <Route path="/map-test" element={<PostMap/>}/>
+              <Route path="/map-test" element={<PostMap location={{lat: 0, lng: 0}}/>}/>
           </Route>
           
 

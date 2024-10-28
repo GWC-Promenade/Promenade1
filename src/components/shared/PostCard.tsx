@@ -4,6 +4,7 @@ import { Models } from 'appwrite';
 import React from 'react'
 import { Link } from 'react-router-dom';
 import PostStats from './PostStats';
+import PostMap from './PostMap';
 
 type PostCardProps = {
   post: Models.Document;
@@ -13,7 +14,14 @@ const PostCard = ( {post}: PostCardProps ) => {
 
   if (!post.creator) return; // something wrong
 
+  const location: google.maps.LatLngLiteral = {
+    lat: post.latitude,
+    lng: post.longitude,
+  }
+
+
   return (
+    <>
     <div className="post-card">
       <div className="flex-between">
         <div className="flex items-center gap-3">
@@ -69,10 +77,14 @@ const PostCard = ( {post}: PostCardProps ) => {
             className="post-card_img"
             alt="post image"
           />
-    
+
+        <PostMap location={location}/>
+          
         </Link>
         <PostStats post={post} userId={user.id} /> 
     </div>
+    
+    </>
   )
 }
 
