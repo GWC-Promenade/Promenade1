@@ -27,7 +27,7 @@ const PostStats = ({ post, userId} : PostStatsProps) => {
     const{ data: currentUser } = useGetCurrentUser();
 
     const savedPostRecord = currentUser?.save.find(
-        (record: Models.Document) => record.post.$id === post?.$id);
+        (record: Models.Document) => record.post?.$id === post?.$id);
 
     useEffect(() => {
         setIsSaved(!!savedPostRecord)
@@ -81,8 +81,9 @@ const PostStats = ({ post, userId} : PostStatsProps) => {
         <div className="flex gap-2">
             {isSavingPost || isDeletingSaved ? <Loader /> : <img
                 src={isSaved ?
-                    savedImg
-                    : saveImg}
+                    "/assets/icons/saved.svg" 
+                    :"/assets/icons/save.svg"}
+         
                 alt="save"
                 width={20}
                 height={20}

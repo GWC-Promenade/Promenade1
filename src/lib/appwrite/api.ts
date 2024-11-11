@@ -5,6 +5,7 @@ import { ID, ImageGravity, Query } from 'appwrite';
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { account, appwriteConfig, avatars, databases, storage } from './config';
 import { LogIn } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 /*
 - Create a new account in Appwrite->Auth upon sign up
@@ -345,11 +346,18 @@ export async function deletePost(postId: string, imageId: string) {
     if(!postId || !imageId) throw Error;
 
     try {
-        await databases.deleteDocument(
+        const deletedPost = await databases.deleteDocument(
             appwriteConfig.databaseId,
             appwriteConfig.postCollectionId,
             postId
         )
+
+        await deleteFile(imageId);
+        if (deletedPost) {
+            return toast({
+              title: "Post successfully deleted."
+            })
+          }
         return {status: "ok"}
     } catch (error) {
         console.log(error)
