@@ -1,9 +1,13 @@
 import React from 'react'
 
+import bikeImg from '/assets/icons/bike.svg';
+import walkImg from '/assets/icons/walk.svg';
+import busImg from '/assets/icons/bus.svg';
+
 const imagePaths: { [key: string]: string } = {
-  bike: 'assets/icons/bike.svg',
-  walk: 'assets/icons/walk.svg',
-  bus: 'assets/icons/bus.svg',
+  bike: bikeImg,
+  walk: walkImg,
+  bus: busImg,
 }
 
 const TransportationIcon: React.FC<{ transportation: string }>= ({transportation}) => {
