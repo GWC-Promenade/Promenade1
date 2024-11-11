@@ -23,7 +23,9 @@ export const PostValidation = z.object({
     file: z.custom<File[]>(),
     location: z.string().min(1).max(100),
     tags: z.string(),
-    latitude: z.string().transform((v) => Number(v) || 0),
-    longitude: z.string().transform((v) => Number(v) || 0),
+    latitude: z.number(),
+    // z.string().transform((v) => Number(v) || 0),
+    longitude: z.number(),
+    // z.string().transform((v) => Number(v) || 0),
     transportation: z.array(z.string())
 })

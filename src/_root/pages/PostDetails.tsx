@@ -6,6 +6,7 @@ import { formatDateString } from '@/lib/utils'
 import { useUserContext } from '@/context/AuthContext'
 import { Button } from '@/components/ui/button'
 import PostStats from '@/components/shared/PostStats'
+import PostMap from '@/components/shared/PostMap'
 
 const PostDetails = () => {
   const {id } = useParams();
@@ -19,11 +20,21 @@ const PostDetails = () => {
       
       {isPending ? <Loader /> : (
         <div className = "post_details-card">
-          <img
-            src = {post?.imageUrl}
-            alt = 'post'
-            className = "post_details-img"
-          />
+          <div className="flex-col">
+            <img
+              src = {post?.imageUrl}
+              alt = 'post'
+              // className = "post_details-img"
+              style={{"height" : "500px", "marginBottom" : "20px"}}
+            />
+
+            <PostMap location = {{lat: post?.latitude, lng: post?.longitude}}
+              
+            />
+
+          </div>
+         
+          
           <div className="post_details-info">
             <div className= "flex-between w-full">
             <Link to={`/profile/${post?.creator.$id}`} 
