@@ -13,10 +13,10 @@ const PostDetails = () => {
   const {id } = useParams();
   const{ data: post, isPending } = useGetPostById(id || '');
   const{ user } = useUserContext();
-  const { mutateAsync: deletePost, isPending: isLoadingUpdate } = useDeletePost();
+  const { mutate: deletePost } = useDeletePost();
 
-  const handleDeletePost = (e: React.MouseEvent) => {
-    deletePost({postId: post?.id, imageId: post?.imageId});
+  const handleDeletePost = () => {
+    deletePost({postId: id, imageId: post?.imageId});
     navigate(-1);
   }
 
