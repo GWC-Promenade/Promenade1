@@ -5,6 +5,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import PostStats from './PostStats';
 import PostMap from './PostMap';
+import TransportationIcon from './TransportationIcon';
 
 type PostCardProps = {
   post: Models.Document;
@@ -82,10 +83,18 @@ const PostCard = ( {post}: PostCardProps ) => {
             className="post-card_img"
             alt="post image"
           />
-
-        <PostMap location={location}/>
-          
         </Link>
+        <PostMap location={location}/>
+
+        <div className="flex gap-2 flex-row justify-start py-3  ">
+          {post.transportation.map((transport: string) => (
+            <li key={transport} className="bg-primary-500 flex justify-center items-center rounded">
+                <TransportationIcon transportation={transport}></TransportationIcon>
+            </li>
+          ))}
+        </div>
+          
+        
         <PostStats post={post} userId={user.id} /> 
     </div>
     

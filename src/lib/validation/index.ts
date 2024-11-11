@@ -25,4 +25,5 @@ export const PostValidation = z.object({
     tags: z.string(),
     latitude: z.string().transform((v) => Number(v) || 0),
     longitude: z.string().transform((v) => Number(v) || 0),
+    transportation: z.array(z.string())
 })

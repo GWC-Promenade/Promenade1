@@ -286,3 +286,11 @@
   width: 500px;
   border-radius: 20px;
 }
+
+.option-hover {
+  @apply rounded-lg base-medium hover:bg-primary-500 transition p-3 px-5;
+}
+
+.option-select {
+  @apply bg-primary-500
+}

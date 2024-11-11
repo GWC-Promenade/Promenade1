@@ -19,6 +19,9 @@ import { useUserContext } from "@/context/AuthContext"
 import { useToast } from "@/hooks/use-toast"
 import { useNavigate } from "react-router-dom"
 import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations"
+import { useState } from "react"
+import { Transportation } from "@/types"
+import SelectTransportation from "./SelectTransportation"
 
 type PostFormProps = {
   post?: Models.Document;
@@ -37,6 +40,8 @@ const PostForm = ( {post, action}: PostFormProps ) => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  const [transportation, setTransportation] = useState<Transportation[]>([])
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
@@ -47,11 +52,17 @@ const PostForm = ( {post, action}: PostFormProps ) => {
       tags: post ? post.tags.join(',') : '',
       latitude: post ? post?.latitude : 0,
       longitude: post ? post?.longitude : 0,
+      transportation: [],
     },
   })
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
+    if (transportation.length === 0) {
+      return toast({
+        title: 'Please select a mode of transportation.'
+      })
+    }
 
     if(post && action === 'Update') {
       const updatedPost = await updatePost({
@@ -59,8 +70,7 @@ const PostForm = ( {post, action}: PostFormProps ) => {
         postId: post.$id,
         imageId: post?.imageId,
         imageUrl: post?.imageUrl,
-        // latitude: post?.latitude,
-        // longitude: post?.longitude,
+        transportation: transportation,
       })
 
       if(!updatedPost) {
@@ -73,8 +83,7 @@ const PostForm = ( {post, action}: PostFormProps ) => {
     const newPost = await createPost({
       ...values, 
       userId: user.id,
-      // latitude: post?.latitude,
-      // longitude: post?.longitude,
+      transportation: transportation,
     })
 
     if (!newPost) {
@@ -195,6 +204,8 @@ const PostForm = ( {post, action}: PostFormProps ) => {
             </FormItem>
           )}
         />
+
+        <SelectTransportation transportation={transportation} setTransportation={setTransportation}/>
 
         <div className="flex gap-4 items-center justify-end">
           <Button 

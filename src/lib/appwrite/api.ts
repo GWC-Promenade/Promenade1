@@ -147,6 +147,7 @@ export async function createPost(post: INewPost) {
                 tags: tags,
                 latitude: post.latitude,
                 longitude: post.longitude,
+                transportation: post.transportation as string[]
             }
         );
 
@@ -320,7 +321,11 @@ export async function updatePost(post: IUpdatePost) {
                 imageUrl: image.imageUrl,
                 imageId: image.imageId,
                 location: post.location,
-                tags: tags
+                tags: tags,
+                latitude: post.latitude,
+                longitude: post.longitude,
+                transportation: post.transportation as string[]
+
             }
         );
 
