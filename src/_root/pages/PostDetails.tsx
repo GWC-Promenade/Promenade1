@@ -1,7 +1,5 @@
 import { useDeletePost, useGetPostById } from '@/lib/react-query/queriesAndMutations'
 import {Link, useParams , useNavigate} from 'react-router-dom'
-import { useDeletePost, useGetPostById } from '@/lib/react-query/queriesAndMutations'
-import {Link, useParams , useNavigate} from 'react-router-dom'
 import Loader from "@/components/shared/Loader"
 import React from 'react'
 import { formatDateString } from '@/lib/utils'
@@ -12,17 +10,12 @@ import PostMap from '@/components/shared/PostMap'
 
 const PostDetails = () => {
   const navigate = useNavigate();
-  const navigate = useNavigate();
+
   const {id } = useParams();
   const{ data: post, isPending } = useGetPostById(id || '');
   const{ user } = useUserContext();
-  const { mutateAsync: deletePost, isPending: isLoadingUpdate } = useDeletePost();
   const { mutate: deletePost } = useDeletePost();
 
-  const handleDeletePost = (e: React.MouseEvent) => {
-    deletePost({postId: post?.id, imageId: post?.imageId});
-    navigate(-1);
-  }
   const handleDeletePost = () => {
     deletePost({postId: id, imageId: post?.imageId});
     navigate(-1);
