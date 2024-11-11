@@ -5,6 +5,9 @@ import { Models } from 'appwrite';
 import { checkIsLiked } from '@/lib/utils';
 import { Loader } from 'lucide-react';
 
+import savedImg from '/assets/icons/saved.svg';
+import saveImg from '/assets/icons/save.svg';
+
 type PostStatsProps = {
   post?: Models.Document;
   userId: string;
@@ -80,6 +83,7 @@ const PostStats = ({ post, userId} : PostStatsProps) => {
                 src={isSaved ?
                     "/assets/icons/saved.svg" 
                     :"/assets/icons/save.svg"}
+         
                 alt="save"
                 width={20}
                 height={20}

@@ -17,7 +17,7 @@ import { PostValidation } from "@/lib/validation"
 import { Models } from "appwrite"
 import { useUserContext } from "@/context/AuthContext"
 import { useToast } from "@/hooks/use-toast"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations"
 import { useState } from "react"
 import { Transportation } from "@/types"
@@ -211,8 +211,9 @@ const PostForm = ( {post, action}: PostFormProps ) => {
           <Button 
             type="button" 
             className="shad-button_dark_4"
+            
           >
-            Cancel
+            <Link to={`/posts/${post?.$id}`}>Cancel</Link>
           </Button>
           <Button 
             type="submit"
