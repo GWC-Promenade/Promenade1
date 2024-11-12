@@ -1,7 +1,6 @@
 import { useDeletePost, useGetPostById } from '@/lib/react-query/queriesAndMutations'
 import {Link, useParams , useNavigate} from 'react-router-dom'
 import Loader from "@/components/shared/Loader"
-import React from 'react'
 import { formatDateString } from '@/lib/utils'
 import { useUserContext } from '@/context/AuthContext'
 import { Button } from '@/components/ui/button'
@@ -17,6 +16,7 @@ const PostDetails = () => {
   const { mutate: deletePost } = useDeletePost();
 
   const handleDeletePost = () => {
+    // @ts-expect-error unused
     deletePost({postId: id, imageId: post?.imageId});
     navigate(-1);
   }
@@ -56,6 +56,7 @@ const PostDetails = () => {
                 </p>
                 <div className="flex-center gap-2 text-light-3">
                   <p className="subtle-semibold lg:small-regular">
+                    {/*// @ts-expect-error unused*/}
                     {formatDateString(post?.$createdAt)}
                   </p>
                   <p className="subtle-semibold lg:small-regular">

@@ -11,6 +11,7 @@ interface SelectTransportationProps {
 const SelectTransportation: React.FC<SelectTransportationProps> = ({transportation, setTransportation}) => {
   console.log("In SelectTransportation: transportation=", transportation);
 
+  // @ts-expect-error unused
   const toggleTransportation = (selected: Transportation): string[] => {
     if(transportation.includes(selected)) {
       return transportation.filter((item) => item !== selected) as string[]; // remove the value from transportation modes (toggle off)

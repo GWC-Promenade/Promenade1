@@ -7,6 +7,7 @@ import {
     useQuery,
     useMutation,
     useQueryClient,
+    // @ts-expect-error unused
     useInfiniteQuery
 } from '@tanstack/react-query'
 

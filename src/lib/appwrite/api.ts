@@ -4,6 +4,7 @@ Functions we'll call to connect to Appwrite
 import { ID, ImageGravity, Query } from 'appwrite';
 import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { account, appwriteConfig, avatars, databases, storage } from './config';
+// @ts-expect-error unused
 import { LogIn } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 

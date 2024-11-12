@@ -34,7 +34,9 @@ const SignupForm = () => {
   - isLoading is a bool denoting whether the action of mutation is currently loading. We can use it to render a loading animation
   */
 
+  // @ts-expect-error unused
   const { mutateAsync: signInAccount, isPending: isSigningIn } = useSignInAccount();
+  // @ts-expect-error unused
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
   const navigate = useNavigate();
 

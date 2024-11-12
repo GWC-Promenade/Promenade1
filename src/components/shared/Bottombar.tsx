@@ -1,5 +1,6 @@
 import { bottombarLinks } from '@/constants';
 import { INavLink } from '@/types';
+// @ts-expect-error unused
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 

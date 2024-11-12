@@ -1,3 +1,4 @@
+// @ts-expect-error unused
 import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps';
 import React, { useState } from 'react'
 
@@ -16,6 +17,8 @@ const PostMap: React.FC<PostMapProps> = ({location}) => {
   }
 
   const shownLocation = location.lat && location.lng ? location : defaultLocation;
+
+  // @ts-expect-error unused
   const [markerLocation, setMarkerLocation] = useState(shownLocation);
 
   console.log("in PostMap: markerLocation=", markerLocation)

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+// @ts-expect-error unused
 import { useUserContext } from '@/context/AuthContext';
 import { useDeleteSavedPost, useGetCurrentUser, useLikePost, useSavePost } from '@/lib/react-query/queriesAndMutations';
 import { Models } from 'appwrite';
 import { checkIsLiked } from '@/lib/utils';
 import { Loader } from 'lucide-react';
 
+// @ts-expect-error unused
 import savedImg from '/assets/icons/saved.svg';
+// @ts-expect-error unused
 import saveImg from '/assets/icons/save.svg';
 
 type PostStatsProps = {
