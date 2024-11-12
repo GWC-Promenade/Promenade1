@@ -18,7 +18,7 @@ const PostDetails = () => {
   const handleDeletePost = () => {
     // @ts-expect-error unused
     deletePost({postId: id, imageId: post?.imageId});
-    navigate(-1);
+    navigate('/');
   }
 
   return (
