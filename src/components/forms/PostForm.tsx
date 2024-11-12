@@ -52,7 +52,7 @@ const PostForm = ( {post, action}: PostFormProps ) => {
       tags: post ? post.tags.join(',') : '',
       latitude: post ? post?.latitude : 0,
       longitude: post ? post?.longitude : 0,
-      transportation: [],
+      transportation: post ? post?.transportation : [],
     },
   })
  
@@ -205,7 +205,7 @@ const PostForm = ( {post, action}: PostFormProps ) => {
           )}
         />
 
-        <SelectTransportation transportation={transportation} setTransportation={setTransportation}/>
+        <SelectTransportation transportation={post?.transportation.map((t: string) => t as Transportation)} setTransportation={setTransportation}/>
 
         <div className="flex gap-4 items-center justify-end">
           <Button 
