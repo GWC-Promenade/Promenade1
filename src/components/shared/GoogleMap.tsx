@@ -3,7 +3,7 @@
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
 
 // @ts-expect-error unused
-const API_KEY = globalThis.GOOGLE_MAPS_API_KEY ?? ("AIzaSyCyEgdE6jHCW_aA0oDqEFkzt9tfCAphYFg");
+const API_KEY = globalThis.GOOGLE_MAPS_API_KEY;
 
 const GoogleMap = () => (
   <APIProvider

@@ -8,8 +8,11 @@ import AuthLayout from './_auth/AuthLayout';
 import RootLayout from './_root/RootLayout';
 import { Toaster } from "@/components/ui/toaster";
 import PostMap from './components/shared/PostMap';
+import { Client } from 'appwrite';
 
 const App = () => {
+  const client = new Client();
+  client.setProject('66f8b014001417eb8ea5');
   return (
     <main className="flex h-screen">
       <Routes>
