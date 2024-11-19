@@ -68,7 +68,7 @@ const SignupForm = () => {
     if (!newUser) {
       return toast({
         variant: "destructive",
-        title: "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!",
+        title: "Oops!",
         description: "Sign up failed. Please try again.",
       });
     }
@@ -81,7 +81,7 @@ const SignupForm = () => {
     if (!session) {
       return toast({
         variant: "destructive",
-        title: "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!",
+        title: "Oops!",
         description: "Sign up failed. Please try again.",
       });
     }
@@ -94,7 +94,7 @@ const SignupForm = () => {
     } else {
       return toast({
         variant: "destructive",
-        title: "OOPSIE WOOPSIE!! Uwu We made a fucky wucky!",
+        title: "Oops!",
         description: "Sign up failed. Please try again.",
       });
     }
