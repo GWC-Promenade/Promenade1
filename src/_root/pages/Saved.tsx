@@ -1,8 +1,3 @@
-import Loader from '@/components/shared/Loader';
-import PostCard from '@/components/shared/PostCard';
-import { useUserContext } from '@/context/AuthContext';
-import { useGetCurrentUser, useGetRecentPosts, useGetSavedPosts } from '@/lib/react-query/queriesAndMutations';
-import { Models } from 'appwrite';
 
 const Saved = () => {
   return (
