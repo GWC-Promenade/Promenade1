@@ -1,4 +1,4 @@
-A first attempt at the tutorial here: https://www.youtube.com/watch?v=_W3R2VwRyF4
+Built off of: https://www.youtube.com/watch?v=_W3R2VwRyF4
 
 Tools
 - React
@@ -6,6 +6,7 @@ Tools
 
 - Appwrite (backend service)
 - Vite (development)
+- Vercel (deployment)
 
 - Libraries
     - Tailwind
