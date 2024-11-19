@@ -220,6 +220,25 @@ export async function getRecentPosts() {
     return posts;
 }
 
+export async function getSavedPosts() {
+    const currentAccount = await account.get();
+    if (!currentAccount) throw Error;
+
+    console.log(currentAccount.$id)
+    const posts = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.savesCollectionId,
+        [Query.orderDesc('$createdAt'), Query.limit(20)], // sort by most recent
+        // [Query.equal('user', currentAccount.$id)] // get an array of all documents whose id == currentAccount's id
+
+    )
+    console.log(posts)
+
+    if (!posts) throw Error;
+
+    return posts;
+}
+
 export async function likePost(postId: string, likesArray: string[]) {
     try{
         const updatedPost = await databases.updateDocument(
@@ -246,7 +265,7 @@ export async function savePost(postId: string, userId: string) {
             ID.unique(),
             {
                 user: userId,
-                post:postId
+                post: postId
             }
         )
 
