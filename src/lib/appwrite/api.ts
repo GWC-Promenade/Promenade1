@@ -220,6 +220,43 @@ export async function getRecentPosts() {
     return posts;
 }
 
+// export async function getCurrentUser() {
+//     try {
+//         const currentAccount = await account.get();
+//         if (!currentAccount) throw Error;
+
+//         const currentUser = await databases.listDocuments(
+//             appwriteConfig.databaseId,
+//             appwriteConfig.userCollectionId,
+//             [Query.equal('accountId', currentAccount.$id)] // get an array of all documents whose id == currentAccount's id
+//         )
+        
+//         if (!currentUser) throw Error;
+
+//         return currentUser.documents[0];
+
+//     } catch (error) {
+//         console.log("error signing in: getting current user:", error);
+//     }
+// }
+
+export async function getSavedPosts() {
+    const currentAccount = await account.get();
+    if (!currentAccount) throw Error;
+
+    const posts = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.savesCollectionId,
+        [Query.equal('user', currentAccount.$id)] // get an array of all documents whose id == currentAccount's id
+
+        
+    )
+
+    if (!posts) throw Error;
+
+    return posts;
+}
+
 export async function likePost(postId: string, likesArray: string[]) {
     try{
         const updatedPost = await databases.updateDocument(
@@ -237,6 +274,8 @@ export async function likePost(postId: string, likesArray: string[]) {
         console.log(error);
     }
 }
+
+
 
 export async function savePost(postId: string, userId: string) {
     try{
