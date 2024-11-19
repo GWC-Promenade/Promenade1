@@ -10,16 +10,16 @@ export const sidebarLinks: INavLink[] = [
     route: "/",
     label: "Home",
   },
-  {
-    imgURL: "/assets/icons/wallpaper.svg",
-    route: "/explore",
-    label: "Explore",
-  },
-  {
-    imgURL: "/assets/icons/people.svg",
-    route: "/all-users",
-    label: "People",
-  },
+  // {
+  //   imgURL: "/assets/icons/wallpaper.svg",
+  //   route: "/explore",
+  //   label: "Explore",
+  // },
+  // {
+  //   imgURL: "/assets/icons/people.svg",
+  //   route: "/all-users",
+  //   label: "People",
+  // },
   {
     imgURL: "/assets/icons/bookmark.svg",
     route: "/saved",
@@ -38,11 +38,11 @@ export const bottombarLinks: INavLink[] = [
     route: "/",
     label: "Home",
   },
-  {
-    imgURL: "/assets/icons/wallpaper.svg",
-    route: "/explore",
-    label: "Explore",
-  },
+  // {
+  //   imgURL: "/assets/icons/wallpaper.svg",
+  //   route: "/explore",
+  //   label: "Explore",
+  // },
   {
     imgURL: "/assets/icons/bookmark.svg",
     route: "/saved",
